@@ -132,6 +132,16 @@ export default function Navigation() {
                 <Link href="/dashboard" className="nav-link">
                   Dashboard
                 </Link>
+                {user.isOrganizer && (
+                  <Link href="/organizer" className="nav-link">
+                    Organizer
+                  </Link>
+                )}
+                {user.isAdmin && (
+                  <Link href="/admin" className="nav-link">
+                    Admin
+                  </Link>
+                )}
                 <Link href="/profile" className="nav-link">
                   Profile
                 </Link>
@@ -212,6 +222,24 @@ export default function Navigation() {
                 >
                   Dashboard
                 </Link>
+                {user.isOrganizer && (
+                  <Link
+                    href="/organizer"
+                    className="block nav-link py-3 px-4 rounded-xl hover:bg-white/10 transition-all duration-200"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Organizer
+                  </Link>
+                )}
+                {user.isAdmin && (
+                  <Link
+                    href="/admin"
+                    className="block nav-link py-3 px-4 rounded-xl hover:bg-white/10 transition-all duration-200"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Admin
+                  </Link>
+                )}
                 <Link
                   href="/profile"
                   className="block nav-link py-3 px-4 rounded-xl hover:bg-white/10 transition-all duration-200"
