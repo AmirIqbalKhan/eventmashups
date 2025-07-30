@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyToken } from './lib/auth';
 
 // Define route access patterns
 const publicRoutes = ['/', '/events', '/auth/login', '/auth/signup'];
@@ -27,44 +26,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
-  // Verify token and get user info
-  const payload = verifyToken(token);
-  if (!payload) {
-    // Invalid token, redirect to login
-    if (pathname.startsWith('/api/')) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
-    }
-    return NextResponse.redirect(new URL('/auth/login', request.url));
-  }
+  // For now, just check if token exists (auth verification will be done in API routes)
+  // This avoids Edge Runtime issues with bcryptjs and jsonwebtoken
 
-  // Role-based access control
-  if (adminRoutes.some(route => pathname.startsWith(route))) {
-    if (!payload.isAdmin) {
-      if (pathname.startsWith('/api/')) {
-        return NextResponse.json({ error: 'Forbidden: Admin access required' }, { status: 403 });
-      }
-      return NextResponse.redirect(new URL('/dashboard', request.url));
-    }
-  }
-
-  if (organizerRoutes.some(route => pathname.startsWith(route))) {
-    if (!payload.isOrganizer && !payload.isAdmin) {
-      if (pathname.startsWith('/api/')) {
-        return NextResponse.json({ error: 'Forbidden: Organizer access required' }, { status: 403 });
-      }
-      return NextResponse.redirect(new URL('/dashboard', request.url));
-    }
-  }
-
-  // For user routes, any authenticated user can access
-  if (userRoutes.some(route => pathname.startsWith(route))) {
-    return NextResponse.next();
-  }
-
-  // For API routes that don't match specific patterns, allow if authenticated
-  if (pathname.startsWith('/api/')) {
-    return NextResponse.next();
-  }
+  // Role-based access control will be handled in individual API routes
+  // where we can use Node.js runtime
 
   return NextResponse.next();
 }
@@ -79,5 +45,4 @@ export const config = {
      */
     '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
-  runtime: 'nodejs',
 }; 

@@ -18,7 +18,6 @@ export async function GET(
         ticket_tier_id: groupPayments.ticket_tier_id,
         total_quantity: groupPayments.total_quantity,
         total_amount: groupPayments.total_amount,
-        amount_per_person: groupPayments.amount_per_person,
         status: groupPayments.status,
         created_at: groupPayments.created_at,
         updated_at: groupPayments.updated_at,
@@ -61,7 +60,6 @@ export async function GET(
       ticket_tier_id: groupPayment[0].ticket_tier_id,
       total_quantity: groupPayment[0].total_quantity,
       total_amount: Number(groupPayment[0].total_amount),
-      amount_per_person: Number(groupPayment[0].amount_per_person),
       status: groupPayment[0].status,
       event: {
         title: groupPayment[0].event_title,
