@@ -3,9 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { db } from '@/lib/database';
-import { events } from '@/lib/database/schema';
-import { desc, asc, eq, like } from 'drizzle-orm';
 
 interface Event {
   id: string;
@@ -55,13 +52,12 @@ export default function EventsPage() {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const eventsData = await db
-        .select()
-        .from(events)
-        .where(eq(events.isPublished, true))
-        .orderBy(desc(events.createdAt));
-      
-      setAllEvents(eventsData);
+      const response = await fetch('/api/events');
+      if (!response.ok) {
+        throw new Error('Failed to fetch events');
+      }
+      const data = await response.json();
+      setAllEvents(data.events || data);
     } catch (error) {
       console.error('Error fetching events:', error);
       setAllEvents([]);

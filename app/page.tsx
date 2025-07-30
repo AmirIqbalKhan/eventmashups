@@ -1,19 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import { Suspense } from 'react';
-import { db } from '@/lib/database';
-import { events } from '@/lib/database/schema';
-import { desc } from 'drizzle-orm';
+import { Suspense, useEffect, useState } from 'react';
 
-async function getFeaturedEvents() {
+interface Event {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  location: string;
+  startDate: string;
+  image?: string;
+  createdAt: string;
+}
+
+async function getFeaturedEvents(): Promise<Event[]> {
   try {
-    const featuredEvents = await db
-      .select()
-      .from(events)
-      .orderBy(desc(events.createdAt))
-      .limit(6);
-    return featuredEvents;
+    const response = await fetch('/api/events/featured');
+    if (!response.ok) {
+      throw new Error('Failed to fetch featured events');
+    }
+    return await response.json();
   } catch (error) {
     console.error('Error fetching featured events:', error);
     return [];
@@ -38,9 +45,46 @@ function LoadingSpinner() {
   );
 }
 
-async function FeaturedEvents() {
-  const eventsData = await getFeaturedEvents();
-  
+function FeaturedEvents() {
+  const [eventsData, setEventsData] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setLoading(true);
+        const data = await getFeaturedEvents();
+        setEventsData(data);
+      } catch (err) {
+        setError('Failed to load events');
+        console.error('Error fetching events:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-white/70 text-lg">Error loading events</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="btn-primary mt-4 inline-block"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
   if (eventsData.length === 0) {
     return (
       <div className="text-center py-12">

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database';
 import { events, ticketTiers } from '@/lib/database/schema';
 import { getCurrentUser, requireOrganizer } from '@/lib/auth';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, desc } from 'drizzle-orm';
 
 export async function POST(request: NextRequest) {
   try {
@@ -161,3 +161,5 @@ export async function GET(request: NextRequest) {
     );
   }
 } 
+
+ 
