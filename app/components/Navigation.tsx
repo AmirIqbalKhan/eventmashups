@@ -79,8 +79,13 @@ export default function Navigation() {
         <div className={`navbar-content ${isScrolled ? 'navbar-content-pill' : 'navbar-content-full'}`}>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <Link href="/" className="text-xl font-bold text-gradient">
-                Event Mashups
+              <Link href="/" className="flex items-center space-x-2">
+                <div className="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <span className="text-lg sm:text-xl font-bold text-gradient">Event Mashups</span>
               </Link>
             </div>
             <div className="animate-pulse bg-white/20 h-8 w-24 rounded"></div>
@@ -95,8 +100,13 @@ export default function Navigation() {
       <div className={`navbar-content ${isScrolled ? 'navbar-content-pill' : 'navbar-content-full'}`}>
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Link href="/" className="text-lg sm:text-xl font-bold text-gradient">
-              Event Mashups
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <span className="text-lg sm:text-xl font-bold text-gradient">Event Mashups</span>
             </Link>
           </div>
 
