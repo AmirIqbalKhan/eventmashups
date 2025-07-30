@@ -80,11 +80,15 @@ export default function Navigation() {
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2">
-                <div className="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
+                <img 
+                  src="/logo.png" 
+                  alt="Event Mashups Logo" 
+                  className="h-8 w-8 sm:h-10 sm:w-10"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                />
                 <span className="text-lg sm:text-xl font-bold text-gradient">Event Mashups</span>
               </Link>
             </div>
@@ -101,11 +105,15 @@ export default function Navigation() {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
+              <img 
+                src="/logo.png" 
+                alt="Event Mashups Logo" 
+                className="h-8 w-8 sm:h-10 sm:w-10"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
               <span className="text-lg sm:text-xl font-bold text-gradient">Event Mashups</span>
             </Link>
           </div>
