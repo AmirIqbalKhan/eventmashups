@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database';
 import { events, tickets } from '@/lib/database/schema';
-import { count, eq, gte } from 'drizzle-orm';
+import { count, eq, gte, and } from 'drizzle-orm';
 import { getCurrentUser } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
@@ -28,8 +28,10 @@ export async function GET(request: NextRequest) {
     const upcomingEvents = await db.select({ count: count() })
       .from(tickets)
       .innerJoin(events, eq(tickets.eventId, events.id))
-      .where(eq(tickets.currentOwnerId, user.id))
-      .where(gte(events.startDate, new Date()));
+      .where(and(
+        eq(tickets.currentOwnerId, user.id),
+        gte(events.startDate, new Date())
+      ));
     
     // Calculate total spent (simplified - would need to join with ticket tiers for actual amounts)
     const totalSpent = userTickets[0]?.count * 50 || 0; // Placeholder calculation
