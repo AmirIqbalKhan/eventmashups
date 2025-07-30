@@ -1,0 +1,1 @@
+ALTER TABLE "group_payments" DROP COLUMN IF EXISTS "amount_per_person";
