@@ -47,7 +47,6 @@ export default function RootLayout({
                 <h3 className="text-white font-semibold mb-4 text-sm sm:text-base">Quick Links</h3>
                 <ul className="space-y-2 text-sm sm:text-base">
                   <li><a href="/events" className="text-white/70 hover:text-white transition-colors">Browse Events</a></li>
-                  <li><a href="/events/create" className="text-white/70 hover:text-white transition-colors">Create Event</a></li>
                   <li><a href="/dashboard" className="text-white/70 hover:text-white transition-colors">Dashboard</a></li>
                   <li><a href="/profile" className="text-white/70 hover:text-white transition-colors">Profile</a></li>
                 </ul>

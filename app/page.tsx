@@ -3,6 +3,15 @@
 import Link from 'next/link';
 import { Suspense, useEffect, useState } from 'react';
 
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  isOrganizer: boolean;
+  isAdmin: boolean;
+}
+
 interface Event {
   id: string;
   title: string;
@@ -45,7 +54,7 @@ function LoadingSpinner() {
   );
 }
 
-function FeaturedEvents() {
+function FeaturedEvents({ user }: { user: User | null }) {
   const [eventsData, setEventsData] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -89,9 +98,11 @@ function FeaturedEvents() {
     return (
       <div className="text-center py-12">
         <p className="text-white/70 text-lg">No events available yet</p>
-        <Link href="/events/create" className="btn-primary mt-4 inline-block">
-          Create First Event
-        </Link>
+        {user?.isOrganizer && (
+          <Link href="/events/create" className="btn-primary mt-4 inline-block">
+            Create First Event
+          </Link>
+        )}
       </div>
     );
   }
@@ -168,6 +179,27 @@ function CategoryCards() {
 }
 
 export default function HomePage() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const response = await fetch('/api/profile');
+        if (response.ok) {
+          const userData = await response.json();
+          setUser(userData);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setUser(null);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -211,9 +243,11 @@ export default function HomePage() {
             <Link href="/events" className="btn-primary text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-5 w-full sm:w-auto">
               Explore Events
             </Link>
-            <Link href="/events/create" className="btn-outline text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-5 w-full sm:w-auto">
-              Create Event
-            </Link>
+            {user?.isOrganizer && (
+              <Link href="/events/create" className="btn-outline text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-5 w-full sm:w-auto">
+                Create Event
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -255,7 +289,7 @@ export default function HomePage() {
           </div>
           
           <Suspense fallback={<LoadingSpinner />}>
-            <FeaturedEvents />
+            <FeaturedEvents user={user} />
           </Suspense>
           
           <div className="text-center mt-12">

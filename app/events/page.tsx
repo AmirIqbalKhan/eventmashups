@@ -4,6 +4,15 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  isOrganizer: boolean;
+  isAdmin: boolean;
+}
+
 interface Event {
   id: string;
   title: string;
@@ -26,6 +35,7 @@ export default function EventsPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState('date');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [user, setUser] = useState<User | null>(null);
   const searchParams = useSearchParams();
 
   // Mock categories since they're not in the schema yet
@@ -35,7 +45,23 @@ export default function EventsPage() {
 
   useEffect(() => {
     fetchEvents();
+    checkAuthStatus();
   }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch('/api/profile');
+      if (response.ok) {
+        const userData = await response.json();
+        setUser(userData);
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.error('Auth check error:', error);
+      setUser(null);
+    }
+  };
 
   useEffect(() => {
     // Get category from URL params
@@ -129,15 +155,17 @@ export default function EventsPage() {
               <h1 className="text-4xl font-bold text-white mb-2">Discover Events</h1>
               <p className="text-white/90 text-lg">Find amazing events happening around you</p>
             </div>
-            <Link 
-              href="/events/create" 
-              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-2xl hover:from-purple-600 hover:to-pink-600 transition-all duration-200 inline-flex items-center space-x-2"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-              <span>Create Event</span>
-            </Link>
+            {user?.isOrganizer && (
+              <Link 
+                href="/events/create" 
+                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-2xl hover:from-purple-600 hover:to-pink-600 transition-all duration-200 inline-flex items-center space-x-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                <span>Create Event</span>
+              </Link>
+            )}
           </div>
         </div>
 
@@ -340,7 +368,7 @@ export default function EventsPage() {
         )}
 
         {/* Create Event CTA */}
-        {filteredEvents.length > 0 && (
+        {filteredEvents.length > 0 && user?.isOrganizer && (
           <div className="text-center mt-16">
             <div className="card p-8 max-w-2xl mx-auto">
               <h3 className="text-2xl font-bold text-white mb-4">Can't find what you're looking for?</h3>

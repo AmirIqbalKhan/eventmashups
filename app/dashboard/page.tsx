@@ -222,9 +222,11 @@ function UnifiedDashboard({ user, events, tickets }: { user: User; events: Event
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Link href="/events/create" className="btn-primary text-sm px-4 py-2 text-center">
-              Create Event
-            </Link>
+            {user.isOrganizer && (
+              <Link href="/events/create" className="btn-primary text-sm px-4 py-2 text-center">
+                Create Event
+              </Link>
+            )}
             <Link href="/events" className="btn-outline text-sm px-4 py-2 text-center">
               Browse Events
             </Link>
@@ -309,9 +311,11 @@ function UnifiedDashboard({ user, events, tickets }: { user: User; events: Event
           {events.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-white/70 mb-4">No events found</p>
-              <Link href="/events/create" className="btn-primary text-sm">
-                Create Your First Event
-              </Link>
+              {user.isOrganizer && (
+                <Link href="/events/create" className="btn-primary text-sm">
+                  Create Your First Event
+                </Link>
+              )}
             </div>
           ) : (
             <div className="space-y-4">
