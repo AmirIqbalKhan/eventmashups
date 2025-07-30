@@ -95,17 +95,8 @@ export default function Navigation() {
       <div className={`navbar-content ${isScrolled ? 'navbar-content-pill' : 'navbar-content-full'}`}>
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <img 
-                src="/logo.png" 
-                alt="Event Mashups Logo" 
-                className="h-8 w-8 sm:h-10 sm:w-10"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }}
-              />
-              <span className="text-lg sm:text-xl font-bold text-gradient">Event Mashups</span>
+            <Link href="/" className="text-lg sm:text-xl font-bold text-gradient">
+              Event Mashups
             </Link>
           </div>
 
