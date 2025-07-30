@@ -26,6 +26,7 @@
     "eslint": "^8.0.0",
     "eslint-config-next": "14.0.0",
     "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.303.0",
     "next": "14.0.0",
     "postcss": "^8.4.32",
     "qrcode": "^1.5.3",
