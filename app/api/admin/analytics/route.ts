@@ -74,18 +74,27 @@ export async function GET(request: NextRequest) {
       .limit(3);
 
     for (const event of recentEvents) {
-      const organizer = await db
-        .select({ firstName: users.firstName, lastName: users.lastName })
-        .from(users)
-        .where(eq(users.id, event.organizerId))
-        .limit(1);
+      if (event.organizerId) {
+        const organizer = await db
+          .select({ firstName: users.firstName, lastName: users.lastName })
+          .from(users)
+          .where(eq(users.id, event.organizerId))
+          .limit(1);
 
-      recentActivity.push({
-        type: 'event',
-        description: `New event "${event.title}" created`,
-        timestamp: event.createdAt.toISOString(),
-        user: organizer[0] ? `${organizer[0].firstName} ${organizer[0].lastName}` : 'Unknown'
-      });
+        recentActivity.push({
+          type: 'event',
+          description: `New event "${event.title}" created`,
+          timestamp: event.createdAt?.toISOString() || new Date().toISOString(),
+          user: organizer[0] ? `${organizer[0].firstName} ${organizer[0].lastName}` : 'Unknown'
+        });
+      } else {
+        recentActivity.push({
+          type: 'event',
+          description: `New event "${event.title}" created`,
+          timestamp: event.createdAt?.toISOString() || new Date().toISOString(),
+          user: 'Unknown'
+        });
+      }
     }
 
     // Get recent user registrations
@@ -103,7 +112,7 @@ export async function GET(request: NextRequest) {
       recentActivity.push({
         type: 'user',
         description: `New user "${user.firstName} ${user.lastName}" registered`,
-        timestamp: user.createdAt.toISOString(),
+        timestamp: user.createdAt?.toISOString() || new Date().toISOString(),
         user: 'System'
       });
     }
