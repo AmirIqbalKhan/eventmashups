@@ -158,22 +158,7 @@ export default function LoginPage() {
           </form>
         </div>
 
-        {/* Demo Accounts */}
-        <div className="card p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">Demo Accounts</h3>
-          <div className="space-y-3 text-sm">
-            <div className="bg-white/5 rounded-xl p-3">
-              <p className="text-white font-semibold">Admin Account</p>
-              <p className="text-white/70">Email: aamiriqbalkhan001@gmail.com</p>
-              <p className="text-white/70">Password: lalgkhan</p>
-            </div>
-            <div className="bg-white/5 rounded-xl p-3">
-              <p className="text-white font-semibold">Organizer Account</p>
-              <p className="text-white/70">Email: paleop1122@gmail.com</p>
-              <p className="text-white/70">Password: lalgkhan</p>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   );

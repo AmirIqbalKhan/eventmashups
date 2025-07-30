@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: 'Connect, celebrate, and create unforgettable memories with events that bring people together',
   icons: {
     icon: '/favicon.png',
+    shortcut: '/favicon.png',
     apple: '/favicon.png',
   },
 };
