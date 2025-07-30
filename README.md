@@ -84,8 +84,8 @@ Event Mashups/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/event-mashups.git
-   cd event-mashups
+   git clone https://github.com/AmirIqbalKhan/eventmashups.git
+   cd eventmashups
    ```
 
 2. **Install dependencies**
@@ -181,6 +181,12 @@ SMTP_PASS="your-app-password"
 - ✅ Analytics dashboard
 - ✅ Content management
 - ✅ Security monitoring
+
+## 🚀 Deployment Status
+
+**Latest Deployment**: Ready for production deployment
+**Repository**: [https://github.com/AmirIqbalKhan/eventmashups.git](https://github.com/AmirIqbalKhan/eventmashups.git)
+**Status**: ✅ All systems operational
 
 ## 🤝 Contributing
 
